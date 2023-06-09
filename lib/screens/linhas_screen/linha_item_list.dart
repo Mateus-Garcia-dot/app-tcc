@@ -1,38 +1,52 @@
 import 'package:flutter/material.dart';
 
+import '../../models/linha.dart';
+import '../commom/conversor_cores.dart';
+
 class LinhaItemList extends StatelessWidget {
-  const LinhaItemList({Key? key}) : super(key: key);
+  final Linha? linha;
+
+  const LinhaItemList({Key? key, this.linha}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Color cor = ConversorCores.fromString(linha!.NOME_COR);
+
     return InkWell(
       onTap: () {},
-      child: Row(
-        children: [
-          Container(
-              alignment: AlignmentDirectional.center,
-              width: 50,
-              height: 50,
-              child: const Icon(
-                Icons.directions_bus_filled,
-                size: 24,
-              )),
-          Container(
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0,6,0,6),
-                  child: Text(
-                    "Interbairros 2",
-                    style: TextStyle(fontSize: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Container(
+                alignment: AlignmentDirectional.center,
+                width: 50,
+                height: 50,
+                child: IconTheme(
+                    data: IconThemeData(color: cor),
+                    child: Icon(
+                      Icons.directions_bus_filled,
+                      size: 24,
+                      color: cor,
+                    ))),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 6, 0, 6),
+                    child: Text(
+                      linha!.NOME,
+                      style: const TextStyle(fontSize: 16),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Text("Nome"),
-              ],
+                  Text(linha!.COD),
+                ],
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

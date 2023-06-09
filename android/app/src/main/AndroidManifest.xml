@@ -4,8 +4,11 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
+        <!-- <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCKfgO1jvx-odeUtoMiglrkK7Df0O77t00"/>-->
+
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCKfgO1jvx-odeUtoMiglrkK7Df0O77t00"/>
+            android:value=""/>
 
         <activity
             android:name=".MainActivity"

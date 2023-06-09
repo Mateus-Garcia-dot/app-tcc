@@ -11,8 +11,8 @@ class AuthService {
 
   Future<String> login(String email, String password) async {
     http.Response response = await client.post(
-      Uri.parse("${WebClient.url}login"),
-      body: {"email": email, "password": password},
+      Uri.parse("${WebClient.url}logar"),
+      body: {"login": email, "senha": password},
     );
 
     if (response.statusCode != 200) {
@@ -28,7 +28,7 @@ class AuthService {
 
   Future<String> register(String email, String password) async {
     http.Response response = await client.post(
-      Uri.parse("${WebClient.url}register"),
+      Uri.parse("${WebClient.url}cadastrar"),
       body: {"email": email, "password": password},
     );
 
@@ -44,11 +44,11 @@ class AuthService {
 
     Map<String, dynamic> map = json.decode(body);
 
-    sharedPreferences.setString("accessToken", map["accessToken"]);
-    sharedPreferences.setString("id", map["user"]["id"].toString());
-    sharedPreferences.setString("email", map["user"]["email"]);
+    //sharedPreferences.setString("accessToken", map["accessToken"]);
+    sharedPreferences.setString("_id", map["usuario"]["_id"].toString());
+    sharedPreferences.setString("login", map["usuario"]["login"]);
 
-    return map["accessToken"];
+    return map["usuario"]["login"];
   }
 }
 

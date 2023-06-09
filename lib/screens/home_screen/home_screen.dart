@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../models/journal.dart';
 import '../map_screen/map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -12,8 +11,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int windowPage = 10;
-
-  Map<String, Journal> database = {};
 
   String userId = '';
 

@@ -2,16 +2,24 @@ import 'package:app_tcc/screens/itinerario_screen/itinerario_screen.dart';
 import 'package:app_tcc/screens/linhas_favoritas_screen/linhas_favoritas_screen.dart';
 import 'package:app_tcc/screens/linhas_screen/linhas_screen.dart';
 import 'package:app_tcc/screens/login_screen/login_screen.dart';
+import 'package:app_tcc/services/linha_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/home_screen/home_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool isLogged = await verifyToken();
 
-  runApp(MyApp(isLogged: isLogged));
+  runApp(
+      MultiProvider(
+      providers: [
+        Provider<LinhasService>(create: (_) => LinhasService()),
+      ],
+          child: MyApp(isLogged: isLogged)
+  ));
 }
 
 Future<bool> verifyToken() async {
