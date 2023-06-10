@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 
 import '../../models/linha.dart';
-import '../commom/conversor_cores.dart';
+import '../rota_linha_screen/rota_linha_screen.dart';
 
-class LinhaItemList extends StatelessWidget {
+class LinhaItemList extends StatefulWidget {
   final Linha? linha;
 
   const LinhaItemList({Key? key, this.linha}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Color cor = ConversorCores.fromString(linha!.NOME_COR);
+  State<LinhaItemList> createState() => _LinhaItemListState();
+}
 
+class _LinhaItemListState extends State<LinhaItemList> {
+  @override
+  bool favoritado = false;
+
+  Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => RotaLinhaScreen(linha: widget.linha,),
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -22,13 +34,10 @@ class LinhaItemList extends StatelessWidget {
                 alignment: AlignmentDirectional.center,
                 width: 50,
                 height: 50,
-                child: IconTheme(
-                    data: IconThemeData(color: cor),
-                    child: Icon(
-                      Icons.directions_bus_filled,
-                      size: 24,
-                      color: cor,
-                    ))),
+                child: const Icon(
+                  Icons.directions_bus_filled,
+                  size: 24,
+                )),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -36,15 +45,27 @@ class LinhaItemList extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 6, 0, 6),
                     child: Text(
-                      linha!.NOME,
+                      widget.linha!.NOME,
                       style: const TextStyle(fontSize: 16),
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  Text(linha!.COD),
+                  Text(widget.linha!.COD),
                 ],
               ),
             ),
+            IconButton(
+              onPressed: () => {
+                setState(() {
+                  favoritado = !favoritado;
+                })
+              },
+              icon: Icon(
+                favoritado ? Icons.favorite : Icons.favorite_border,
+                size: 16,
+                color: Colors.red,
+              ),
+            )
           ],
         ),
       ),

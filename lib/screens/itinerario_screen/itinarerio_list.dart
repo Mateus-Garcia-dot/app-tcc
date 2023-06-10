@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../linhas_favoritas_screen/itinerario_list_item.dart';
+import 'itinerario_list_item.dart';
 
 class ItinerarioList extends StatelessWidget {
   const ItinerarioList({Key? key}) : super(key: key);

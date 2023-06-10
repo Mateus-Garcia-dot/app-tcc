@@ -44,13 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.favorite),
-              title: const Text("Linhas favoritas"),
-              onTap: () {
-                irParaLinhasFavoritas();
-              },
-            ),
-            ListTile(
               leading: const Icon(Icons.logout),
               title: const Text("Sair"),
               onTap: () {

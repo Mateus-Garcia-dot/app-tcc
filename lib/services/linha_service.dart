@@ -1,3 +1,4 @@
+import 'package:app_tcc/models/shapeLinha.dart';
 import 'package:app_tcc/services/web_client.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -19,7 +20,7 @@ class LinhasService {
     return Uri.parse(getURL());
   }
 
-  Future<bool> buscarLinhaPorCod(String cod) async {
+  Future<Linha> buscarLinhaPorCod(String cod) async {
     http.Response response = await client.get(
       Uri.parse("${getURL()}$cod"),
       headers: {
@@ -27,7 +28,10 @@ class LinhasService {
       },
     );
 
-    return true;
+    dynamic jsonMap = json.decode(response.body);
+    Linha linha = Linha.fromMap(jsonMap);
+
+    return linha;
   }
 
   Future<List<Linha>> listarLinhas() async {
@@ -45,6 +49,26 @@ class LinhasService {
     List<dynamic> jsonList = json.decode(response.body);
     for (var jsonMap in jsonList) {
       result.add(Linha.fromMap(jsonMap));
+    }
+
+    return result;
+  }
+
+  Future<List<ShapeLinha>> buscarShapeLinha(String codLinha) async {
+    Uri uri = Uri.parse("${WebClient.url}linhas/shape/$codLinha");
+
+    http.Response response = await client.get(
+      uri,
+      headers: {
+        'Content-type': 'application/json',
+      },
+    );
+
+    List<ShapeLinha> result = [];
+
+    List<dynamic> jsonList = json.decode(response.body);
+    for (var jsonMap in jsonList) {
+      result.add(ShapeLinha.fromMap(jsonMap));
     }
 
     return result;

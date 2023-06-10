@@ -1,7 +1,7 @@
 import 'package:app_tcc/screens/itinerario_screen/itinerario_screen.dart';
-import 'package:app_tcc/screens/linhas_favoritas_screen/linhas_favoritas_screen.dart';
 import 'package:app_tcc/screens/linhas_screen/linhas_screen.dart';
 import 'package:app_tcc/screens/login_screen/login_screen.dart';
+import 'package:app_tcc/screens/rota_linha_screen/rota_linha_screen.dart';
 import 'package:app_tcc/services/linha_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,7 +25,6 @@ void main() async {
 Future<bool> verifyToken() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-  //TODO: Criar uma classe de valores
   String? token = sharedPreferences.getString('accessToken');
   if (token != null) {
     return true;
@@ -57,9 +56,9 @@ class MyApp extends StatelessWidget {
       routes: {
         "home": (context) => const HomeScreen(),
         "login": (context) => LoginScreen(),
-        "linhasFavoritas": (context) => const LinhasFavoritasScreen(),
         "linhas": (context) => const LinhasScreen(),
-        "itinerario": (context) => const ItinerarioScreen()
+        "itinerario": (context) => const ItinerarioScreen(),
+        "rotaLinha": (context) => const RotaLinhaScreen()
       },
     );
   }
