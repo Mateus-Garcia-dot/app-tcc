@@ -7,11 +7,14 @@ import 'package:app_tcc/screens/commom/exception_dialog.dart';
 import 'package:app_tcc/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class CadastroScreen extends StatelessWidget {
+  CadastroScreen({Key? key}) : super(key: key);
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _telefoneController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _nomeController = TextEditingController();
 
   final AuthService authService = AuthService();
 
@@ -27,18 +30,20 @@ class LoginScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                      width: 200,
-                      height: 150,
-                      child: Image.asset('assets/logo/logo.png',
-                          fit: BoxFit.fill)),
-                  const Text("Entre ou Registre-se",
-                      style: TextStyle(fontSize: 18)),
+                  const Text("Criar conta", style: TextStyle(fontSize: 24)),
+                  TextFormField(
+                    controller: _nomeController,
+                    decoration: const InputDecoration(label: Text("Nome")),
+                    keyboardType: TextInputType.text,
+                  ),
+                  TextFormField(
+                    controller: _telefoneController,
+                    decoration: const InputDecoration(label: Text("Telefone")),
+                    keyboardType: TextInputType.phone,
+                  ),
                   TextFormField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      label: Text("E-mail"),
-                    ),
+                    decoration: const InputDecoration(label: Text("E-mail")),
                     keyboardType: TextInputType.emailAddress,
                   ),
                   TextFormField(
@@ -47,27 +52,18 @@ class LoginScreen extends StatelessWidget {
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, 'cadastro');
-                    },
-                    child: const Text('Criar conta',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        color: Colors.blueGrey,
-                      ),
-                    ),
+                  TextFormField(
+                    controller: _cpfController,
+                    decoration: const InputDecoration(label: Text("CPF")),
+                    keyboardType: TextInputType.number,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
-                    child: Container(
-                      width: 250,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            tryLogin(context);
-                          },
-                          child: const Text("Login")),
-                    ),
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                        onPressed: () {
+                          cadastrar(context);
+                        },
+                        child: const Text("Cadastrar")),
                   ),
                 ],
               ),
@@ -78,23 +74,17 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void tryLogin(BuildContext context) {
+  void cadastrar(BuildContext context) {
     String email = _emailController.text;
     String password = _passwordController.text;
+    String cpf = _cpfController.text;
+    String telefone = _telefoneController.text;
+    String nome = _nomeController.text;
 
-    authService.login(email, password).then((token) {
+    authService.cadastrar(email, password, cpf, telefone, nome).then((token) {
       Navigator.pushReplacementNamed(context, 'home');
     }).catchError((e) {
-      showConfirmationDialog(
-        context,
-        title: "Usuário ainda não existe",
-        content: "Deseja criar um novo usuário com email $email?",
-        affirmativeOption: "Criar",
-      ).then(
-        (value) async {
-          if (value) {}
-        },
-      );
+
     }, test: (e) => e is UserNotFoundException).catchError((e) {
       HttpException exception = e as HttpException;
       showExceptionDialog(context, content: exception.message);

@@ -1,8 +1,10 @@
+import 'package:app_tcc/screens/cadastro_screen/cadastro_screen.dart';
 import 'package:app_tcc/screens/itinerario_screen/itinerario_screen.dart';
 import 'package:app_tcc/screens/linhas_screen/linhas_screen.dart';
 import 'package:app_tcc/screens/login_screen/login_screen.dart';
 import 'package:app_tcc/screens/rota_linha_screen/rota_linha_screen.dart';
 import 'package:app_tcc/services/linha_service.dart';
+import 'package:app_tcc/services/localizacao_usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/home_screen/home_screen.dart';
@@ -12,6 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   bool isLogged = await verifyToken();
+  await obterLocalizacaoPeriodica();
 
   runApp(
       MultiProvider(
@@ -58,7 +61,8 @@ class MyApp extends StatelessWidget {
         "login": (context) => LoginScreen(),
         "linhas": (context) => const LinhasScreen(),
         "itinerario": (context) => const ItinerarioScreen(),
-        "rotaLinha": (context) => const RotaLinhaScreen()
+        "rotaLinha": (context) => const RotaLinhaScreen(),
+        "cadastro": (context) => CadastroScreen()
       },
     );
   }

@@ -26,10 +26,17 @@ class AuthService {
     return saveInfosFromResponse(response.body);
   }
 
-  Future<String> register(String email, String password) async {
+  Future<String> cadastrar(String email, String password, String cpf, String nome, String telefone) async {
     http.Response response = await client.post(
       Uri.parse("${WebClient.url}cadastrar"),
-      body: {"email": email, "password": password},
+      body: {
+        "email": email,
+        "senha": password,
+        "login": email,
+        "nome": nome,
+        "cpf": cpf,
+        "telefone": telefone
+      },
     );
 
     if (response.statusCode != 201) {

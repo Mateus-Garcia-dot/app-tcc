@@ -10,8 +10,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int windowPage = 10;
-
   String userId = '';
 
   @override
